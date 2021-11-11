@@ -10,8 +10,8 @@ using namespace std;
 // convert decimal x to binary array bin
 int* binary(int x, int dim){
     
-    int* bin = (int*)malloc(dim*sizeof(int));       // declare binary array
-    for(int i=0; i<dim; i++)                        // clean binary array
+    int* bin = (int*)malloc(dim*sizeof(int));
+    for(int i=0; i<dim; i++)
         bin[i]=0;
     
     int i = dim-1;                                  // start with least signficant position
@@ -22,22 +22,6 @@ int* binary(int x, int dim){
     }
     
     return bin;
-}
-
-// sum values in array
-int sum(int* array, int dim){
-    int sum = 0;
-    for(int i = 0; i<dim ; i++)
-        sum+=array[i];
-    
-    return sum;
-}
-
-// swap two elements in array
-void swap(int* a, int* b){
-	int t = *a;
-	*a = *b;
-	*b = t;
 }
 
 // check which processes generate pivot
@@ -51,8 +35,8 @@ bool check_id(int* bin_process_id, int step, int dim){
 // partition array around the pivot
 int hyper_partition(vector<int> &array, int low, int high, int pivot){
     
-    int i = low - 1;
-	for(int j=low; j<high; j++){
+    int i = low - 1;	
+    for(int j=low; j<high; j++){
 		if(array[j]<=pivot){
 			i++;
 			int temp = array[i];
@@ -69,27 +53,32 @@ int hyper_partition(vector<int> &array, int low, int high, int pivot){
 }
 
 // partition array for serial quicksort
-int partition (vector<int> &arr, int low, int high){
-	int pivot = arr[high];
+int partition (vector<int> &array, int low, int high){
+	
+    int pivot = array[high];
 	int i = (low-1);
-    int t;
-
 	for (int j=low; j<=high-1; j++){
-		if (arr[j] <= pivot){
+		if (array[j] <= pivot){
 			i++;
-			swap(&arr[i], &arr[j]);
+			int temp = array[i];
+			array[i] = array[j];
+			array[j] = temp;
 		}
 	}
-	swap(&arr[i+1], &arr[high]);
+
+    int temp = array[i+1];
+    array[i+1] = array[high];
+    array[high] = temp;
+
 	return (i + 1);
 }
 
 // serial quicksort
-void quicksort(vector<int> &arr, int low, int high){
+void quicksort(vector<int> &array, int low, int high){
 	if (low<high){
-		int pi = partition(arr, low, high);
-		quicksort(arr, low, pi-1);
-		quicksort(arr, pi+1, high);
+		int pi = partition(array, low, high);
+		quicksort(array, low, pi-1);
+		quicksort(array, pi+1, high);
 	}
 }
 
@@ -239,10 +228,11 @@ int main(int argc, char *argv[]){
     MPI_Finalize();
 
     if(process_id==0){
+        printf("\n");
         printf("This is the final sorted array:\n");
         for(int i=0; i<size; i++)
             printf("%d ", sorted_array[i]);
-        printf("\n");
+        printf("\n \n");
         printf("Time taken: %fs\n", elapsed_time);
     }
 
