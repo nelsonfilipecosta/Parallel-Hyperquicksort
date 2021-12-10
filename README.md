@@ -8,7 +8,7 @@ and its execution is illustrated in the figure below.
 
 ![This is an image](https://github.com/nelsonfilipecosta/Parallel-Hyperquicksort/blob/main/Figures/hypercube_topology.png)
 
-The implementation of this algorithm was based on problem 9.17. from the textboox
+The implementation of this algorithm was based on chapter 9 from the textboox
 
 > Kumar, V., Grama, A., Gupta, A. and Karypis, G. Introduction to parallel computing (Vol. 110). Redwood City, CA: Benjamin/Cummings, 1994.
 
